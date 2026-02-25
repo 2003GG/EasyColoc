@@ -25,9 +25,13 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => fake()->email(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'role_id'=>fake()->numberBetween(1,2),
+            'note'=>fake()->numberBetween(-4,9),
+            'condition'=>fake()->randomElement(['banne','notbanne']),
+            'colocation_id'=>fake()->numberBetween(1,6),
             'remember_token' => Str::random(10),
         ];
     }
