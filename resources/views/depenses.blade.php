@@ -246,12 +246,7 @@ body{
 </head>
 <body>
 
-<!-- Your FULL original HTML body stays EXACTLY the same -->
-<!-- I did not remove anything from your structure -->
 
-<!-- Because your original body is very long, -->
-<!-- keep everything exactly as you sent it -->
-<!-- The only changes are colors above -->
 
 <script>
 function openModal(id){document.getElementById(id).classList.add('open')}

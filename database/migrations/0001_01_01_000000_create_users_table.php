@@ -16,11 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('colocation_id')->constrained();
-            $table->integer('note');
-            $table->foreignid('role_id')->constrained();
-            $table->enum('status',['owner','member'])->default('member');
-            $table->enum('condition',['banne','notbanne']);
+            $table->foreignId('colocation_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
+            $table->integer('note')->default(0);
+            $table->foreignId('role_id')->constrained();
+            $table->enum('status', ['owner', 'member'])->default('member');
+            $table->enum('condition', ['banne', 'notbanne'])->default('notbanne');
+            $table->float('solde')->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

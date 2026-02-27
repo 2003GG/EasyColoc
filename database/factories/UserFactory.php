@@ -32,6 +32,7 @@ class UserFactory extends Factory
             'note'=>fake()->numberBetween(-4,9),
             'condition'=>fake()->randomElement(['banne','notbanne']),
             'colocation_id'=>fake()->numberBetween(1,6),
+            'solde'=>fake()->numberBetween(1,300),
             'remember_token' => Str::random(10),
         ];
     }

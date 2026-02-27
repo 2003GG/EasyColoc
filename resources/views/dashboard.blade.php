@@ -646,85 +646,7 @@
 <body>
 
     <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="sidebar-logo">Co<span>Loc</span></div>
-        <nav class="sidebar-nav">
-            <div class="nav-section">
-                <span class="nav-label">Navigation</span>
-                <a href="dashboard.html" class="nav-item active">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <rect x="3" y="3" width="7" height="7" rx="1" />
-                        <rect x="14" y="3" width="7" height="7" rx="1" />
-                        <rect x="3" y="14" width="7" height="7" rx="1" />
-                        <rect x="14" y="14" width="7" height="7" rx="1" />
-                    </svg>
-                    Tableau de bord
-                </a>
-                <a href="colocation.html" class="nav-item">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                        <polyline points="9 22 9 12 15 12 15 22" />
-                    </svg>
-                    Ma Colocation
-                </a>
-                <a href="depenses.html" class="nav-item">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <line x1="12" y1="1" x2="12" y2="23" />
-                        <path d="M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6" />
-                    </svg>
-                    Dépenses
-                </a>
-                <a href="balances.html" class="nav-item">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <line x1="3" y1="6" x2="21" y2="6" />
-                        <path d="M3 6l9 6 9-6" />
-                        <line x1="3" y1="18" x2="21" y2="18" />
-                    </svg>
-                    Balances
-                </a>
-                <a href="invitations.html" class="nav-item">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                        <polyline points="22,6 12,13 2,6" />
-                    </svg>
-                    Invitations
-                    <span class="nav-badge">2</span>
-                </a>
-            </div>
-            <div class="nav-section">
-                <span class="nav-label">Administration</span>
-                <a href="admin.html" class="nav-item">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="3" />
-                        <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" />
-                    </svg>
-                    Dashboard Admin
-                </a>
-                <a href="categories.html" class="nav-item">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <circle cx="5" cy="6" r="2" />
-                        <circle cx="5" cy="12" r="2" />
-                        <circle cx="5" cy="18" r="2" />
-                        <line x1="10" y1="6" x2="20" y2="6" />
-                        <line x1="10" y1="12" x2="20" y2="12" />
-                        <line x1="10" y1="18" x2="20" y2="18" />
-                    </svg>
-                    Catégories
-                </a>
-            </div>
-        </nav>
-        <div class="sidebar-footer">
-            <div class="user-card">
-                <div class="avatar avatar-sage">MA</div>
-                <div style="flex:1;min-width:0">
-                    <div
-                        style="font-size:0.8rem;font-weight:500;color:#E5E7EB;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
-                        Marie Audrey</div>
-                    <div style="font-size:0.65rem;color:var(--sage);font-weight:500">Owner · Admin ★★★★★</div>
-                </div>
-            </div>
-        </div>
-    </aside>
+@include('header');
 
     <!-- Main -->
     <main class="main">
@@ -732,6 +654,7 @@
             <div class="topbar-title">Tableau de bord</div>
             <div class="topbar-actions">
                 <span style="font-size:0.8rem;color:var(--muted)">Lundi 23 Fév. 2026</span>
+                @if(auth()->user()->role_id==2)
                 <button class="btn btn-sage btn-sm" onclick="openModal('modal-depense')">
                     <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"
                         viewBox="0 0 24 24">
@@ -740,6 +663,8 @@
                     </svg>
                     Ajouter dépense
                 </button>
+                @else
+                @endif
             </div>
         </div>
 
@@ -757,13 +682,21 @@
                     <div style="color:rgba(255,255,255,0.6);font-size:0.8rem;margin-bottom:4px">Bonjour 👋</div>
                     <div
                         style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:white;margin-bottom:6px">
-                        Marie Audrey</div>
+                        {{ auth()->user()->name }}</div>
+                        @if(auth()->user()->colocation!=null)
                     <div style="color:rgba(255,255,255,0.7);font-size:0.85rem">Colocation <strong
-                            style="color:#C4D9C4">Les Goûters du Jeudi</strong> · 4 membres actifs</div>
+                            style="color:#C4D9C4">{{ auth()->user()->colocation->name }}</strong> · 4 membres actifs
+                        </div>
+                        @else
+                          <div style="color:rgba(255,255,255,0.7);font-size:0.85rem">Colocation <strong
+                            style="color:#C4D9C4">you are not in any colocation</strong> · 4 membres actifs
+                        </div>
+                        @endif
+
                 </div>
                 <div style="text-align:right;position:relative;z-index:1">
                     <div style="color:rgba(255,255,255,0.6);font-size:0.75rem;margin-bottom:4px">Votre solde</div>
-                    <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:2.2rem;color:#86EFAC">+68,50 €
+                    <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:2.2rem;color:#86EFAC">{{ auth()->user()->solde }} €
                     </div>
                     <div style="color:rgba(255,255,255,0.5);font-size:0.75rem">On vous doit de l'argent</div>
                 </div>
@@ -773,9 +706,15 @@
             <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px">
                 <div class="stat-card green fade-in fade-in-1">
                     <div class="stat-icon green">💸</div>
+
+                    <!-- if (auth()->user()->colocation()->depense()->montant==null) -->
+                    <!-- <div class="stat-label">Total dépenses</div>
+                           <div class="stat-value">totalDepenses</div> -->
+
+                <!-- else -->
                     <div class="stat-label">Total dépenses</div>
-                    <div class="stat-value">1 284 €</div>
-                    <div class="stat-sub">Ce mois · +12% vs précédent</div>
+                           <div class="stat-value">0</div>
+                    <!-- endif -->
                 </div>
                 <div class="stat-card orange fade-in fade-in-2">
                     <div class="stat-icon orange">👥</div>
@@ -807,20 +746,21 @@
                     </div>
                     <div>
                         <div class="flex-row">
-                            @foreach ($depenses as $depense)
 
+                            @foreach (auth()->user()->colocation() as $depense )
 
                                 <div class="expense-details">
-                                    <div class="expense-title">{{ $depense->titre }}</div>
+                                    <div class="expense-title">{{ $depense->depense()->titre }}</div>
                                     <div class="expense-meta">Payé par
-                                        <strong>({{$depense->payer}})</strong>{{$depense->date}}</div>
+                                        <strong>({{$depense->payer}})</strong>{{$depense->depense()->date}}</div>
                                 </div>
                                 <div>
-                                    <div class="expense-amount text-green-500">{{$depense->montant}}
+                                    <div class="expense-amount text-green-500">{{$depense->depense()->montant}}
                                     </div>
-                                    <div class="expense-share">{{$depense->status}}
+                                    <div class="expense-share">{{$depense->depense()->status}}
                                     </div>
                                 </div>
+
                             @endforeach
                         </div>
 
@@ -921,8 +861,10 @@
                 <div class="form-group">
                     <label>Catégorie</label>
                     <select name="categorie">
-                        @foreach ($categories as $categorie)
-                            <option value="{{ $categorie->id }}">{{ $categorie->title }}</option>
+                        @foreach (auth()->user()->colocation() as $colocations)
+                        @foreach ($colocations as $colocation)
+                            <option value="{{ $colocation->categorie()->id }}">{{ $colocation->categorie()->title }}</option>
+                        @endforeach
                         @endforeach
                     </select>
                 </div>
@@ -930,10 +872,9 @@
                 <div class="form-group">
                     <label>Payé par</label>
                     <select name="payer">
-                        @foreach ($colocations as $colocation)
-                            @foreach ($colocation->user as $user)
+
+                            @foreach (auth()->user()->colocation() as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
-                            @endforeach
                         @endforeach
                     </select>
                 </div>

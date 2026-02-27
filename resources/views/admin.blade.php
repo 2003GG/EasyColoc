@@ -95,10 +95,10 @@
   <div class="page">
     <!-- Global stats -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px">
-      <div class="stat-card green fade-in fade-in-1"><div class="stat-icon green">🏠</div><div class="stat-label">Colocations</div><div class="stat-value">47</div><div class="stat-sub">12 actives ce mois</div></div>
-      <div class="stat-card orange fade-in fade-in-2"><div class="stat-icon orange">👤</div><div class="stat-label">Utilisateurs</div><div class="stat-value">183</div><div class="stat-sub">+8 cette semaine</div></div>
+      <div class="stat-card green fade-in fade-in-1"><div class="stat-icon green">🏠</div><div class="stat-label">Colocations</div><div class="stat-value">{{$colocations}}</div><div class="stat-sub">12 actives ce mois</div></div>
+      <div class="stat-card orange fade-in fade-in-2"><div class="stat-icon orange">👤</div><div class="stat-label">Utilisateurs</div><div class="stat-value">{{$usersCount}}</div><div class="stat-sub">+8 cette semaine</div></div>
       <div class="stat-card gold fade-in fade-in-3"><div class="stat-icon gold">💰</div><div class="stat-label">Dépenses totales</div><div class="stat-value">94 K€</div><div class="stat-sub">Toute la plateforme</div></div>
-      <div class="stat-card red fade-in fade-in-4"><div class="stat-icon red">🚫</div><div class="stat-label">Bannis</div><div class="stat-value">3</div><div class="stat-sub">Utilisateurs désactivés</div></div>
+      <div class="stat-card red fade-in fade-in-4"><div class="stat-icon red">🚫</div><div class="stat-label">Bannis</div><div class="stat-value">{{$banUser}}</div><div class="stat-sub">Utilisateurs désactivés</div></div>
     </div>
 
     <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:20px">

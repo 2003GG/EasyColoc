@@ -22,7 +22,7 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titre'=>'required|string|max:255',
+            'titre'=>'required|string|max:20|min:6',
             'montant'=>'required|number',
             'date'=>'required',
             'payer'=>'required|string',

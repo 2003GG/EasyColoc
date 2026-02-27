@@ -76,25 +76,7 @@
 </style>
 </head>
 <body>
-<aside class="sidebar">
-  <div class="sidebar-logo">Co<span>Loc</span></div>
-  <nav class="sidebar-nav">
-    <div class="nav-section">
-      <span class="nav-label">Navigation</span>
-      <a href="dashboard.html" class="nav-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Tableau de bord</a>
-      <a href="colocation.html" class="nav-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Ma Colocation</a>
-      <a href="depenses.html" class="nav-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg>Dépenses</a>
-      <a href="balances.html" class="nav-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><path d="M3 6l9 6 9-6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>Balances</a>
-      <a href="invitations.html" class="nav-item active"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Invitations <span class="nav-badge">2</span></a>
-    </div>
-    <div class="nav-section">
-      <span class="nav-label">Administration</span>
-      <a href="admin.html" class="nav-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>Dashboard Admin</a>
-      <a href="categories.html" class="nav-item"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="5" cy="18" r="2"/><line x1="10" y1="6" x2="20" y2="6"/><line x1="10" y1="12" x2="20" y2="12"/><line x1="10" y1="18" x2="20" y2="18"/></svg>Catégories</a>
-    </div>
-  </nav>
-  <div class="sidebar-footer"><div class="user-card"><div class="avatar avatar-sage">MA</div><div style="flex:1;min-width:0"><div style="font-size:0.8rem;font-weight:500;color:#E5E7EB">Marie Audrey</div><div style="font-size:0.65rem;color:var(--sage);font-weight:500">Owner · Admin ★★★★★</div></div></div></div>
-</aside>
+@include('header');
 
 <main class="main">
   <div class="topbar">
@@ -114,39 +96,41 @@
       <div class="section-sub">Colocations qui vous ont invité</div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:32px">
-      <div class="card" style="border-left:4px solid var(--sage-dark)">
-        <div style="padding:20px">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
-            <div>
-              <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:4px">Studio Montparnasse</div>
-              <div style="font-size:0.75rem;color:var(--muted)">Invité par <strong>Pierre Lefebvre</strong></div>
-            </div>
-            <span class="status status-pending">En attente</span>
-          </div>
-          <div style="font-size:0.8rem;color:var(--muted);margin-bottom:16px">3 membres · Actif depuis 6 mois</div>
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-sage btn-sm" style="flex:1" onclick="showToast('Invitation acceptée ! Bienvenue 🏡','success')">✓ Accepter</button>
-            <button class="btn btn-ghost btn-sm" style="flex:1" onclick="showToast('Invitation refusée','error')">✕ Refuser</button>
-          </div>
-        </div>
-      </div>
+
+
+
       <div class="card" style="border-left:4px solid var(--accent)">
+
+
+         @forEach(auth()->user()->receivedInvitations()->get() as $userInvitation)
+
         <div style="padding:20px">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
             <div>
-              <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:4px">Appartement Belleville</div>
-              <div style="font-size:0.75rem;color:var(--muted)">Invité par <strong>Clara Morin</strong></div>
+              <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:4px">{{ $userInvitation->colocation->name }}</div>
+              <!-- <div style="font-size:0.75rem;color:var(--muted)">$userInvitation->user()->from_user->name  <strong></strong></div> -->
             </div>
-            <span class="status status-pending">En attente</span>
+            <span class="status status-pending"></span>
           </div>
           <div style="font-size:0.8rem;color:var(--muted);margin-bottom:16px">2 membres · Actif depuis 2 mois</div>
           <div style="display:flex;gap:8px">
-            <button class="btn btn-sage btn-sm" style="flex:1" onclick="showToast('Impossible : vous êtes déjà dans une colocation active','error')">✓ Accepter</button>
-            <button class="btn btn-ghost btn-sm" style="flex:1" onclick="showToast('Invitation refusée','error')">✕ Refuser</button>
+            <form action="{{ route('accept.invitation',$userInvitation) }}" method="POST">
+                @csrf
+                @method('PUT')
+            <button type="submit" class="btn btn-sage btn-sm" style="flex:1" onclick="showToast('Impossible : vous êtes déjà dans une colocation active','error')">✓ Accepter</button>
+            </form>
+            <form action="{{ route('refuser.invitation',$userInvitation) }}" method="POST">
+                @csrf
+                @method('PUT')
+            <button type="submit" class="btn btn-ghost btn-sm" style="flex:1" onclick="showToast('Invitation refusée','error')">✕ Refuser</button>
+            </form>
           </div>
         </div>
+        @endforeach
+
       </div>
     </div>
+
 
     <!-- Sent -->
     <div style="margin-bottom:16px">
@@ -155,36 +139,28 @@
     </div>
     <div class="card">
       <table>
-        <thead><tr><th>Destinataire</th><th>Envoyée le</th><th>Expire le</th><th>Statut</th><th>Action</th></tr></thead>
+        <thead><tr><th>Colocation Name</th><th>Statut</tr></thead>
         <tbody>
+            @forEach(auth()->user()->invitations()->get() as $userInvitation)
           <tr>
-            <td style="font-weight:500">sarah.petit@gmail.com</td>
-            <td style="color:var(--muted)">20 Fév. 2026</td>
-            <td style="color:var(--muted)">27 Fév. 2026</td>
-            <td><span class="status status-pending">En attente</span></td>
-            <td><button class="btn btn-ghost btn-sm" onclick="showToast('Invitation annulée','error')">Annuler</button></td>
+
+            <td style="font-weight:500">{{ $userInvitation->colocation->name }}</td>
+            <!-- <td style="color:var(--muted)"></td> -->
+            <!-- <td style="color:var(--muted)">27 Fév. 2026</td> -->
+             @if ($userInvitation->status=='waiting')
+             <td><span class="status status-pending">{{$userInvitation->status}}</span></td>
+             @elseif($userInvitation->status=='accepted')
+            <td><span class="status status-active">{{$userInvitation->status}}</span></td>
+            @else
+            <td><span class="status status-cancelled">{{$userInvitation->status}}</span></td>
+
+         <!-- <td><button class="btn btn-ghost btn-sm" onclick="showToast('Invitation annulée','error')">Annuler</button></td> -->
+@endif
+
+
           </tr>
-          <tr>
-            <td style="font-weight:500">marc.dupont@gmail.com</td>
-            <td style="color:var(--muted)">10 Jan. 2026</td>
-            <td style="color:var(--muted)">17 Jan. 2026</td>
-            <td><span class="status status-cancelled">Expirée</span></td>
-            <td><button class="btn btn-ghost btn-sm" onclick="showToast('Invitation renvoyée !','success')">Renvoyer</button></td>
-          </tr>
-          <tr>
-            <td style="font-weight:500">tom.martin@gmail.com</td>
-            <td style="color:var(--muted)">20 Sept. 2025</td>
-            <td style="color:var(--muted)">27 Sept. 2025</td>
-            <td><span class="status status-active">Acceptée</span></td>
-            <td><span style="font-size:0.75rem;color:var(--muted)">—</span></td>
-          </tr>
-          <tr>
-            <td style="font-weight:500">lea.dubois@gmail.com</td>
-            <td style="color:var(--muted)">28 Sept. 2025</td>
-            <td style="color:var(--muted)">5 Oct. 2025</td>
-            <td><span class="status status-active">Acceptée</span></td>
-            <td><span style="font-size:0.75rem;color:var(--muted)">—</span></td>
-          </tr>
+          @endforeach
+
         </tbody>
       </table>
     </div>

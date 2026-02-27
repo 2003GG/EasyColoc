@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Categorie;
 use App\Models\Colocation;
 use App\Models\Depense;
+use App\Models\Invitation;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,9 +22,10 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
+            InvitationSeeder::class,
             RoleSeeder::class,
             DepenseSeeder::class,
-             ColocationSeeder::class,
+            ColocationSeeder::class,
             CategorieSeeder::class,
         ]);
 
@@ -38,6 +40,7 @@ class DatabaseSeeder extends Seeder
             'role_id'=>1,
             'condition'=>'notbanne',
             'note'=>0,
+            'colocation_id'=>null,
         ]);
 
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('from_user')->references('id')->on('user');
             $table->foreign('to_user')->references('id')->on('user');
             $table->enum('status',['accepted','refused','waiting'])->default('waiting');
+            $table->foreignId('colocation_id')->default(null)->constrained();
             $table->timestamps();
         });
     }

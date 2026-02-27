@@ -7,7 +7,7 @@ use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use App\Models\Invitation;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -26,6 +26,7 @@ class User extends Authenticatable
         'status',
         'colocation_id',
         'condition',
+        'solde',
         'password',
     ];
        public function role(){
@@ -37,6 +38,14 @@ class User extends Authenticatable
     public function colocation(){
         return $this->belongsTo(Colocation::class);
     }
+    public function invitations(){
+        return $this->hasMany(Invitation::class, 'from_user' );
+    }
+
+    public function receivedInvitations()
+{
+    return $this->hasMany(Invitation::class, 'to_user');
+}
 
     /**
      * The attributes that should be hidden for serialization.
