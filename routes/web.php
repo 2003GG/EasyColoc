@@ -26,9 +26,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DepenseController::class, 'index'])->name('dashboard');
     Route::post('/dashboard', [DepenseController::class, 'store'])->name('depense.store');
     Route::post('/colocation',[ColocationController::class,'store'])->name('colocation.store');
-    Route::put('/invitation/{userInvitation}/accept',[InvitationController::class,'acceptInvitation'])->name('accept.invitation');
+    Route::put('/invitation/{userInvitation}/accept/{colocationId}',[InvitationController::class,'acceptInvitation'])->name('accept.invitation');
     Route::put('/invitation/{userInvitation}/refuse',[InvitationController::class,'refuseInvitation'])->name('refuser.invitation');
     Route::get('/categorie',[CategorieController::class,'index'])->name('categorie.index');
+    Route::post('/categorie',[CategorieController::class,'store'])->name('categorie.store');
+    Route::post('/invitation',[InvitationController::class,'sendInvitisation'])->name('invitation.send');
 });
 
 require __DIR__.'/auth.php';

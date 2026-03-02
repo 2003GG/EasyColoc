@@ -17,6 +17,7 @@ class Depense extends Model
     'user_id',
     'status',
     'categorie_id',
+    'colocation_id',
    ];
    public function userPayer(){
     return $this->belongsTo(User::class,'payer');
@@ -27,5 +28,8 @@ class Depense extends Model
 
     public function categorie(){
     return $this->belongsTo(Categorie::class);
+   }
+   public function colocation(){
+    return $this->belongsTo(Colocation::class);
    }
 }

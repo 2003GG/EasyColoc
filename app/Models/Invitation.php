@@ -7,18 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invitation extends Model
 {
-    /** @use HasFactory<\Database\Factories\InvitationFactory> */
     use HasFactory;
-    protected $fillable=[
+
+    protected $fillable = [
         'from_user',
         'to_user',
         'colocation_id',
         'status',
     ];
-    public function user(){
-        return $this->belongsTo(User::class , );
+
+    // The user who sent the invitation
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'from_user');
     }
-        public function colocation(){
+
+    // The user who received the invitation
+    public function receiver()
+    {
+        return $this->belongsTo(User::class, 'to_user');
+    }
+
+    public function colocation()
+    {
         return $this->belongsTo(Colocation::class);
     }
 }

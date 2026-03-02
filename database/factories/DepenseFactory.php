@@ -22,8 +22,9 @@ class DepenseFactory extends Factory
     'payer'=>fake()->numberBetween(1,20),
     'date'=>fake()->date(),
     'user_id'=>fake()->numberBetween(1,6),
-    'status'=>fake()->randomElement(['payed','notpayer']),
+    'status'=>fake()->randomElement(['payed','notpayed']),
     'categorie_id'=>fake()->numberBetween(1,6),
+    'colocation_id'=>fake()->numberBetween(1,9),
         ];
     }
 }

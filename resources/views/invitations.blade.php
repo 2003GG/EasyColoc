@@ -102,19 +102,20 @@
       <div class="card" style="border-left:4px solid var(--accent)">
 
 
-         @forEach(auth()->user()->receivedInvitations()->get() as $userInvitation)
+       @foreach(auth()->user()->receiver()->where('status','waiting')->get() as $userInvitation)
 
         <div style="padding:20px">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px">
             <div>
               <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:4px">{{ $userInvitation->colocation->name }}</div>
-              <!-- <div style="font-size:0.75rem;color:var(--muted)">$userInvitation->user()->from_user->name  <strong></strong></div> -->
             </div>
             <span class="status status-pending"></span>
           </div>
           <div style="font-size:0.8rem;color:var(--muted);margin-bottom:16px">2 membres · Actif depuis 2 mois</div>
           <div style="display:flex;gap:8px">
-            <form action="{{ route('accept.invitation',$userInvitation) }}" method="POST">
+            @if (auth()->user()->colocation_id==null)
+
+            <form action="{{ route('accept.invitation',[$userInvitation,'colocationId'=>$userInvitation->colocation->id]) }}" method="POST">
                 @csrf
                 @method('PUT')
             <button type="submit" class="btn btn-sage btn-sm" style="flex:1" onclick="showToast('Impossible : vous êtes déjà dans une colocation active','error')">✓ Accepter</button>
@@ -124,15 +125,22 @@
                 @method('PUT')
             <button type="submit" class="btn btn-ghost btn-sm" style="flex:1" onclick="showToast('Invitation refusée','error')">✕ Refuser</button>
             </form>
+            @else
+        <div style="background:#FEF3C7;border:1px solid #F59E0B;color:#B45309;padding:14px 18px;border-radius:12px;font-size:0.85rem;display:flex;align-items:center;gap:10px;margin-bottom:24px">
+            <span style="font-size:1.2rem">⚠️</span>
+            <span>Vous êtes déjà membre de la colocation <strong>{{ auth()->user()->colocation->name }}</strong>. Vous ne pouvez pas accepter d'autres invitations.</span>
+        </div>
+             @endif
           </div>
         </div>
+
         @endforeach
 
       </div>
     </div>
 
 
-    <!-- Sent -->
+
     <div style="margin-bottom:16px">
       <div class="section-title">Invitations envoyées</div>
       <div class="section-sub">Depuis "Les Goûters du Jeudi"</div>
@@ -141,25 +149,20 @@
       <table>
         <thead><tr><th>Colocation Name</th><th>Statut</tr></thead>
         <tbody>
-            @forEach(auth()->user()->invitations()->get() as $userInvitation)
+        @foreach(auth()->user()->sender()->get() as $userInvitation)
           <tr>
+            <td>{{ $userInvitation->colocation->name }}</td>
 
-            <td style="font-weight:500">{{ $userInvitation->colocation->name }}</td>
-            <!-- <td style="color:var(--muted)"></td> -->
-            <!-- <td style="color:var(--muted)">27 Fév. 2026</td> -->
-             @if ($userInvitation->status=='waiting')
-             <td><span class="status status-pending">{{$userInvitation->status}}</span></td>
-             @elseif($userInvitation->status=='accepted')
-            <td><span class="status status-active">{{$userInvitation->status}}</span></td>
+            @if($userInvitation->status == 'waiting')
+                <td><span class="status status-pending">{{ $userInvitation->status }}</span></td>
+            @elseif($userInvitation->status == 'accepted')
+                <td><span class="status status-active">{{ $userInvitation->status }}</span></td>
             @else
-            <td><span class="status status-cancelled">{{$userInvitation->status}}</span></td>
-
-         <!-- <td><button class="btn btn-ghost btn-sm" onclick="showToast('Invitation annulée','error')">Annuler</button></td> -->
-@endif
-
+                <td><span class="status status-cancelled">{{ $userInvitation->status }}</span></td>
+            @endif
 
           </tr>
-          @endforeach
+         @endforeach
 
         </tbody>
       </table>
@@ -169,23 +172,21 @@
 
 <!-- Modal -->
 <div class="modal-overlay" id="modal-invite">
+    <form action="{{ route('invitation.send') }}" method="POST">
+        @csrf
+        @method('post')
   <div class="modal">
     <div class="modal-header"><div class="modal-title">📧 Inviter un membre</div><button class="close-btn" onclick="closeModal('modal-invite')">✕</button></div>
     <div class="modal-body">
-      <div style="background:var(--cream);border-radius:12px;padding:16px;margin-bottom:20px">
-        <div style="font-size:0.75rem;font-weight:600;margin-bottom:6px">Lien à partager</div>
-        <div style="font-family:monospace;font-size:0.78rem;color:var(--muted);word-break:break-all;margin-bottom:10px">https://coloc.app/invite/tok_xK9mP2qL7nR4s8wF</div>
-        <button class="btn btn-ghost btn-sm" onclick="showToast('Lien copié !','success')">📋 Copier</button>
-      </div>
       <div style="text-align:center;color:var(--muted);font-size:0.8rem;margin:12px 0">— ou envoyez par email —</div>
-      <div class="form-group"><label>Adresse email</label><input type="email" placeholder="colocataire@email.com"></div>
-      <div class="form-group" style="margin-bottom:0"><label>Message (optionnel)</label><textarea placeholder="Bonjour ! Je t'invite à rejoindre notre colocation…" rows="3"></textarea></div>
+      <div class="form-group"><label>Adresse email</label><input type="email" name="email" placeholder="colocataire@email.com"></div>
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-invite')">Annuler</button>
-      <button class="btn btn-primary" onclick="closeModal('modal-invite');showToast('Invitation envoyée !','success')">Envoyer</button>
+      <button type="submit" class="btn btn-primary" onclick="closeModal('modal-invite');showToast('Invitation envoyée !','success')">Envoyer</button>
     </div>
   </div>
+  </form>
 </div>
 <div class="toast-container" id="toasts"></div>
 <script>

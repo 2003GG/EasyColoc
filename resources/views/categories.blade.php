@@ -102,8 +102,9 @@
 
     <!-- Category grid -->
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
-        @foreach (auth()->user()->colocation() as $colocations)
-        @foreach ($colocations->categorie() as $categorie)
+
+        @foreach ($categories as $categorie)
+
       <div style="background:white;border:1px solid #F0EDE8;border-radius:16px;overflow:hidden" class="fade-in fade-in-1">
         <div style="padding:20px;display:flex;align-items:center;gap:14px">
           <div style="width:48px;height:48px;background:#FEF3C7;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0">🛒</div>
@@ -121,7 +122,6 @@
           <div class="progress-bar"><div class="progress-fill" style="width:32%;background:#D97706"></div></div>
         </div>
       </div>
-      @endforeach
       @endforeach
 
       <!-- Add new -->
@@ -158,29 +158,21 @@
 
 <!-- Modal -->
 <div class="modal-overlay" id="modal-cat">
+    <form action="{{route('categorie.store')}}" method="POST">
+        @csrf
+        @method('post')
   <div class="modal">
     <div class="modal-header"><div class="modal-title">🏷️ Nouvelle catégorie</div><button class="close-btn" onclick="closeModal('modal-cat')">✕</button></div>
     <div class="modal-body">
-      <div class="form-group"><label>Nom de la catégorie</label><input type="text" placeholder="Ex: Transport, Courses, Loisirs…"></div>
-      <div class="form-group"><label>Emoji</label><input type="text" placeholder="🛒" maxlength="2" style="font-size:1.4rem;text-align:center;padding:8px"></div>
-      <div class="form-group" style="margin-bottom:0">
-        <label>Couleur de fond</label>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
-          <div style="width:36px;height:36px;background:#FEF3C7;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s" onclick="selectColor(this,'#FEF3C7')"></div>
-          <div style="width:36px;height:36px;background:#EFF6FF;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s" onclick="selectColor(this,'#EFF6FF')"></div>
-          <div style="width:36px;height:36px;background:#F0FFF4;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s" onclick="selectColor(this,'#F0FFF4')"></div>
-          <div style="width:36px;height:36px;background:#FEF2F2;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s" onclick="selectColor(this,'#FEF2F2')"></div>
-          <div style="width:36px;height:36px;background:#F5F3FF;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s" onclick="selectColor(this,'#F5F3FF')"></div>
-          <div style="width:36px;height:36px;background:#FFF7ED;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s" onclick="selectColor(this,'#FFF7ED')"></div>
-          <div style="width:36px;height:36px;background:#F0F9FF;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s" onclick="selectColor(this,'#F0F9FF')"></div>
-        </div>
-      </div>
+      <div class="form-group"><label>Nom de la catégorie</label><input type="text" name="title" placeholder="Ex: Transport, Courses, Loisirs…"></div>
+
     </div>
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal('modal-cat')">Annuler</button>
-      <button class="btn btn-primary" onclick="closeModal('modal-cat');showToast('Catégorie créée !','success')">Créer</button>
+      <button type="submit" class="btn btn-primary" onclick="closeModal('modal-cat');showToast('Catégorie créée !','success')">Créer</button>
     </div>
   </div>
+  </form>
 </div>
 <div class="toast-container" id="toasts"></div>
 <script>

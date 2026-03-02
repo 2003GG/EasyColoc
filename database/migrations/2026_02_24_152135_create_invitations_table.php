@@ -13,15 +13,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('invitations', function (Blueprint $table) {
-            $table->id();
-            $table->integer('from_user');
-            $table->integer('to_user');
-            $table->foreign('from_user')->references('id')->on('user');
-            $table->foreign('to_user')->references('id')->on('user');
-            $table->enum('status',['accepted','refused','waiting'])->default('waiting');
-            $table->foreignId('colocation_id')->default(null)->constrained();
-            $table->timestamps();
-        });
+        $table->id();
+        $table->foreignId('from_user')->constrained('users')->onDelete('cascade');
+        $table->foreignId('to_user')->constrained('users')->onDelete('cascade');
+        $table->foreignId('colocation_id')->constrained()->onDelete('cascade');
+        $table->string('status')->default('waiting');
+        $table->timestamps();
+    });
     }
 
     /**

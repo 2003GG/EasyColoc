@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('titre');
             $table->float('montant');
             $table->date('date');
-            $table->enum('status',['payed','notpayer']);
+            $table->enum('status',['payed','notpayed'])->default('notpayed');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('categorie_id')->constrained();
+            $table->foreignId('colocation_id')->constrained();
             $table->integer('payer');
             $table->foreign('payer')->references('id')->on('user');
             $table->timestamps();

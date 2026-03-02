@@ -169,11 +169,11 @@
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
               <div style="background:var(--cream);border-radius:12px;padding:14px;text-align:center">
-                <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem">       </div>
+                <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem">{{  $colocationUserNumber }}</div>
                 <div style="font-size:0.7rem;color:var(--muted)">Membres</div>
               </div>
               <div style="background:var(--cream);border-radius:12px;padding:14px;text-align:center">
-                <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem">23</div>
+                <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem">{{$depenseNumber}}</div>
                 <div style="font-size:0.7rem;color:var(--muted)">Dépenses</div>
               </div>
               <div style="background:var(--cream);border-radius:12px;padding:14px;text-align:center">
@@ -224,15 +224,7 @@
       </div>
 
       <div style="display:flex;flex-direction:column;gap:16px">
-        <div class="invite-card fade-in">
-          <div style="font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;position:relative;z-index:1">Lien d'invitation actif</div>
-          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:white;margin-bottom:12px;position:relative;z-index:1">Invitez vos colocataires</div>
-          <div style="background:rgba(255,255,255,0.1);border-radius:10px;padding:10px 14px;font-size:0.75rem;color:rgba(255,255,255,0.7);font-family:monospace;word-break:break-all;margin-bottom:14px;position:relative;z-index:1">https://coloc.app/invite/tok_xK9mP2qL7nR4s8</div>
-          <div style="display:flex;gap:8px;position:relative;z-index:1">
-            <button class="btn btn-sage btn-sm" style="flex:1" onclick="showToast('Lien copié !','success')">📋 Copier</button>
-            <button class="btn btn-sm" style="background:rgba(255,255,255,0.1);color:white;flex:1;border:none" onclick="openModal('modal-invite')">📧 Email</button>
-          </div>
-        </div>
+
 
         <div class="card fade-in" style="border-color:#FECACA">
           <div style="padding:20px">

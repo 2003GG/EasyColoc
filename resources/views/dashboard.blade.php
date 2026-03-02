@@ -739,33 +739,42 @@
             <!-- Bottom grid -->
             <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:20px">
                 <!-- Recent expenses -->
-                <div class="card fade-in fade-in-2">
-                    <div class="card-header">
-                        <div class="card-title">Dépenses récentes</div>
-                        <a href="depenses.html" class="btn btn-ghost btn-sm">Voir tout →</a>
-                    </div>
-                    <div>
-                        <div class="flex-row">
-
-                            @foreach (auth()->user()->colocation() as $depense )
-
-                                <div class="expense-details">
-                                    <div class="expense-title">{{ $depense->depense()->titre }}</div>
-                                    <div class="expense-meta">Payé par
-                                        <strong>({{$depense->payer}})</strong>{{$depense->depense()->date}}</div>
-                                </div>
-                                <div>
-                                    <div class="expense-amount text-green-500">{{$depense->depense()->montant}}
-                                    </div>
-                                    <div class="expense-share">{{$depense->depense()->status}}
-                                    </div>
-                                </div>
-
-                            @endforeach
-                        </div>
-
+             <div class="card fade-in fade-in-2">
+    <div class="card-header">
+        <div class="card-title">Dépenses récentes</div>
+        <a href="depenses.html" class="btn btn-ghost btn-sm">Voir tout →</a>
+    </div>
+    <div>
+        @if(auth()->user()->colocation)
+            @foreach ($depenses as $depense)
+            <div class="expense-row">
+                <div class="expense-cat" style="background:#F0FDF4">💸</div>
+                <div class="expense-details">
+                    <div class="expense-title">{{ $depense->titre }}</div>
+                    <div class="expense-meta">Payé par
+                        <strong>{{ $depense->payer }}</strong> · {{ $depense->date }}
                     </div>
                 </div>
+                <div style="text-align:right">
+                    <div class="expense-amount" style="color:var(--sage-dark)">{{ $depense->montant }} €</div>
+                    <div class="expense-share">
+                        @if($depense->status == 'payed')
+                            <span style="color:#15803D">✓ Payé</span>
+                        @else
+                            <span style="color:var(--accent)">En attente</span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        @else
+            <div style="padding:32px;text-align:center">
+                <div style="font-size:2rem;margin-bottom:8px">🏠</div>
+                <div style="color:var(--muted);font-size:0.85rem">Vous n'êtes pas encore dans une colocation.</div>
+            </div>
+        @endif
+    </div>
+</div>
 
                 <!-- Right column -->
                 <div style="display:flex;flex-direction:column;gap:16px">
@@ -861,11 +870,11 @@
                 <div class="form-group">
                     <label>Catégorie</label>
                     <select name="categorie">
-                        @foreach (auth()->user()->colocation() as $colocations)
-                        @foreach ($colocations as $colocation)
-                            <option value="{{ $colocation->categorie()->id }}">{{ $colocation->categorie()->title }}</option>
-                        @endforeach
-                        @endforeach
+                           @if(auth()->user()->colocation)
+                    @foreach ($categories as $categorie)
+                        <option value="{{ $categorie->id }}">{{ $categorie->title }}</option>
+                    @endforeach
+                @endif
                     </select>
                 </div>
 
@@ -873,9 +882,11 @@
                     <label>Payé par</label>
                     <select name="payer">
 
-                            @foreach (auth()->user()->colocation() as $user)
-                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
+                    @if(auth()->user()->colocation)
+                @foreach ($users as $user)
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                @endforeach
+            @endif
                     </select>
                 </div>
 

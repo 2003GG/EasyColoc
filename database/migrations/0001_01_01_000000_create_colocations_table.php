@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('user_id')->constrained();
             $table->enum('status',['active','desactive']);
-            $table->rememberToken();
-
+            $table->string('token')->unique(90)->nullable();
             $table->timestamps();
         });
     }
