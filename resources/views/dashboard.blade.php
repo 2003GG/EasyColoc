@@ -645,8 +645,12 @@
 
 <body>
 
-    <!-- Sidebar -->
+  @if (auth()->user()->condition=='banne')
+@include('banned')
+@else
 @include('header');
+
+
 
     <!-- Main -->
     <main class="main">
@@ -685,11 +689,11 @@
                         {{ auth()->user()->name }}</div>
                         @if(auth()->user()->colocation!=null)
                     <div style="color:rgba(255,255,255,0.7);font-size:0.85rem">Colocation <strong
-                            style="color:#C4D9C4">{{ auth()->user()->colocation->name }}</strong> · 4 membres actifs
+                            style="color:#C4D9C4">{{ auth()->user()->colocation->name }}</strong> · · note ({{ auth()->user()->note}})
                         </div>
                         @else
                           <div style="color:rgba(255,255,255,0.7);font-size:0.85rem">Colocation <strong
-                            style="color:#C4D9C4">you are not in any colocation</strong> · 4 membres actifs
+                            style="color:#C4D9C4">you are not in any colocation</strong> · note ({{ auth()->user()->note}})
                         </div>
                         @endif
 
@@ -707,14 +711,9 @@
                 <div class="stat-card green fade-in fade-in-1">
                     <div class="stat-icon green">💸</div>
 
-                    <!-- if (auth()->user()->colocation()->depense()->montant==null) -->
-                    <!-- <div class="stat-label">Total dépenses</div>
-                           <div class="stat-value">totalDepenses</div> -->
-
-                <!-- else -->
                     <div class="stat-label">Total dépenses</div>
                            <div class="stat-value">0</div>
-                    <!-- endif -->
+
                 </div>
                 <div class="stat-card orange fade-in fade-in-2">
                     <div class="stat-icon orange">👥</div>
@@ -739,102 +738,39 @@
             <!-- Bottom grid -->
             <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:20px">
                 <!-- Recent expenses -->
-             <div class="card fade-in fade-in-2">
-    <div class="card-header">
-        <div class="card-title">Dépenses récentes</div>
-        <a href="depenses.html" class="btn btn-ghost btn-sm">Voir tout →</a>
-    </div>
-    <div>
-        @if(auth()->user()->colocation)
+                <div class="card fade-in fade-in-2">
+                    <div class="card-header">
+                        <div class="card-title">Dépenses récentes</div>
+                        <a href="depenses.html" class="btn btn-ghost btn-sm">Voir tout →</a>
+                    </div>
+                    <div>
+                        <div class="flex-row">
+
+                    @if(auth()->user()->colocation)
             @foreach ($depenses as $depense)
-            <div class="expense-row">
-                <div class="expense-cat" style="background:#F0FDF4">💸</div>
                 <div class="expense-details">
                     <div class="expense-title">{{ $depense->titre }}</div>
                     <div class="expense-meta">Payé par
                         <strong>{{ $depense->payer }}</strong> · {{ $depense->date }}
                     </div>
                 </div>
-                <div style="text-align:right">
-                    <div class="expense-amount" style="color:var(--sage-dark)">{{ $depense->montant }} €</div>
-                    <div class="expense-share">
-                        @if($depense->status == 'payed')
-                            <span style="color:#15803D">✓ Payé</span>
-                        @else
-                            <span style="color:var(--accent)">En attente</span>
-                        @endif
-                    </div>
+                <div>
+                    <div class="expense-amount text-green-500">{{ $depense->montant }} €</div>
+                    <div class="expense-share">{{ $depense->status }}</div>
                 </div>
-            </div>
             @endforeach
         @else
-            <div style="padding:32px;text-align:center">
-                <div style="font-size:2rem;margin-bottom:8px">🏠</div>
-                <div style="color:var(--muted);font-size:0.85rem">Vous n'êtes pas encore dans une colocation.</div>
+            <div style="padding:24px;text-align:center;color:var(--muted);font-size:0.85rem">
+                Vous n'êtes pas encore dans une colocation.
             </div>
         @endif
-    </div>
-</div>
+                        </div>
 
-                <!-- Right column -->
-                <div style="display:flex;flex-direction:column;gap:16px">
-                    <!-- Balance card -->
-                    <div style="background:linear-gradient(135deg,#DCFCE7 0%,#F0FFF4 100%);border:1px solid #BBF7D0;border-radius:16px;padding:20px"
-                        class="fade-in fade-in-3">
-                        <div
-                            style="font-size:0.75rem;font-weight:600;color:#15803D;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em">
-                            💰 Mon solde</div>
-                        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;color:#15803D">+68,50 €
-                        </div>
-                        <div style="font-size:0.8rem;color:#16A34A;margin-top:4px">2 personnes vous doivent de l'argent
-                        </div>
-                        <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
-                            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.8rem">
-                                <span style="color:#374151">Tom → Vous</span>
-                                <span style="font-weight:700;color:#15803D">+43,50 €</span>
-                            </div>
-                            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.8rem">
-                                <span style="color:#374151">Alex → Vous</span>
-                                <span style="font-weight:700;color:#15803D">+25,00 €</span>
-                            </div>
-                        </div>
-                        <a href="balances.html" class="btn btn-ghost btn-sm"
-                            style="margin-top:14px;width:100%;justify-content:center">Voir les remboursements →</a>
-                    </div>
-
-                    <!-- Category chart -->
-                    <div class="card fade-in fade-in-4">
-                        <div class="card-header">
-                            <div class="card-title">Par catégorie</div>
-                        </div>
-                        <div style="padding:16px 20px">
-                            <div class="chart-row">
-                                <div class="chart-label">Loyer</div>
-                                <div class="chart-bar">
-                                    <div class="chart-fill" style="width:62%;background:var(--sage-dark)">800 €</div>
-                                </div>
-                            </div>
-                            <div class="chart-row">
-                                <div class="chart-label">Factures</div>
-                                <div class="chart-bar">
-                                    <div class="chart-fill" style="width:26%;background:var(--accent)">193 €</div>
-                                </div>
-                            </div>
-                            <div class="chart-row">
-                                <div class="chart-label">Courses</div>
-                                <div class="chart-bar">
-                                    <div class="chart-fill" style="width:16%;background:var(--gold)">116 €</div>
-                                </div>
-                            </div>
-                            <div class="chart-row" style="margin-bottom:0">
-                                <div class="chart-label">Divers</div>
-                                <div class="chart-bar">
-                                    <div class="chart-fill" style="width:10%;background:#8B5CF6">65 €</div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
+                <!-- Right column -->
+
             </div>
         </div>
     </main>
@@ -911,5 +847,6 @@
     });
 </script>
 </body>
+@endif
 
 </html>

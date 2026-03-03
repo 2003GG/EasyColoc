@@ -14,6 +14,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'solde',
+        'status',
+        'condition',
+        'role_id',
+        'colocation_id',
+        'note',
     ];
 
     protected $hidden = [
@@ -46,5 +52,8 @@ class User extends Authenticatable
         public function receiver()
         {
             return $this->hasMany(Invitation::class, 'to_user');
+        }
+        public function payement(){
+            return $this->hasMany(Payement::class);
         }
 }

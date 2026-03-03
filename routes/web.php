@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ColocationController;
+use App\Http\Controllers\PayementController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Invitation;
+use App\Models\Payement;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\DepenseController;
@@ -31,6 +33,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/categorie',[CategorieController::class,'index'])->name('categorie.index');
     Route::post('/categorie',[CategorieController::class,'store'])->name('categorie.store');
     Route::post('/invitation',[InvitationController::class,'sendInvitisation'])->name('invitation.send');
+    Route::get('/payements',[PayementController::class,'index'])->name('payement.index');
+    Route::get('/payements/{payementId}/paid',[PayementController::class,'Paid'])->name('payement.paid');
+    Route::put('/colocation/cancel',[ColocationController::class,'cancel'])->name('cancel.colocation');
+
 });
 
 require __DIR__.'/auth.php';

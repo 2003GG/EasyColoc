@@ -32,4 +32,7 @@ class Depense extends Model
    public function colocation(){
     return $this->belongsTo(Colocation::class);
    }
+    public function payement(){
+    return $this->hasMany(Payement::class);
+    }
 }

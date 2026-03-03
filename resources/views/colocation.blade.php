@@ -176,51 +176,33 @@
                 <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem">{{$depenseNumber}}</div>
                 <div style="font-size:0.7rem;color:var(--muted)">Dépenses</div>
               </div>
-              <div style="background:var(--cream);border-radius:12px;padding:14px;text-align:center">
-                <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem">1 284 €</div>
-                <div style="font-size:0.7rem;color:var(--muted)">Total</div>
-              </div>
+
             </div>
           </div>
         </div>
 
+
+
+
         <div class="card fade-in">
           <div class="card-header">
-            <div class="card-title">Membres (4)</div>
+            <div class="card-title">Membres ({{ $colocationUserNumber }})</div>
           </div>
+           @foreach ($usersColocation as $user)
           <div style="padding:8px 24px">
             <div class="member-row">
               <div class="avatar avatar-sage">MA</div>
               <div class="member-info">
-                <div class="member-name">Marie Audrey <span class="role-badge role-owner" style="margin-left:6px">Owner</span></div>
-                <div class="member-meta"><span class="rep pos">★ +5</span> · Rejoint le 15 Sept. 2025</div>
+                <div class="member-name">{{ $user->name }}<span class="role-badge role-owner" style="margin-left:6px">{{ $user->status }}</span></div>
+                <div class="member-meta"><span class="rep pos">★{{ $user->note }}</span> </div>
               </div>
-              <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--sage-dark);font-size:0.9rem">+68,50 €</div>
+              <div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--sage-dark);font-size:0.9rem">{{ $user->solde }} €</div>
             </div>
-            <div class="member-row">
-              <div class="avatar avatar-accent">TM</div>
-              <div class="member-info">
-                <div class="member-name">Tom Martin</div>
-                <div class="member-meta"><span class="rep pos">★ +2</span> · Rejoint le 22 Sept. 2025</div>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--red);font-size:0.9rem">-43,50 €</span>
-                <button class="btn btn-danger btn-sm">Retirer</button>
-              </div>
-            </div>
-            <div class="member-row">
-              <div class="avatar" style="background:#EFF6FF;color:#1D4ED8">LD</div>
-              <div class="member-info">
-                <div class="member-name">Léa Dubois</div>
-                <div class="member-meta"><span class="rep pos">★ +3</span> · Rejoint le 1 Oct. 2025</div>
-              </div>
-              <div style="display:flex;align-items:center;gap:8px">
-                <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--sage-dark);font-size:0.9rem">+12,00 €</span>
-                <button class="btn btn-danger btn-sm">Retirer</button>
-              </div>
-            </div>
+
           </div>
+          @endforeach
         </div>
+
       </div>
 
       <div style="display:flex;flex-direction:column;gap:16px">
@@ -230,7 +212,11 @@
           <div style="padding:20px">
             <div style="font-family:'Syne',sans-serif;font-weight:700;margin-bottom:6px;color:var(--charcoal)">⚠️ Zone de danger</div>
             <div style="font-size:0.8rem;color:var(--muted);margin-bottom:14px">En tant qu'Owner, annuler la colocation affectera tous les membres.</div>
-            <button class="btn btn-danger" style="width:100%;justify-content:center" onclick="openModal('modal-cancel')">🗑 Annuler la colocation</button>
+            <form action="{{ route('cancel.colocation')  }}" method='POST'>
+                @csrf
+                @method('put')
+            <button type="submit" class="btn btn-danger" style="width:100%;justify-content:center" >🗑 Annuler la colocation</button>
+            </form>
           </div>
         </div>
       </div>

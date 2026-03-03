@@ -16,10 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->foreignId('colocation_id')
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete();
+            $table->foreignId('colocation_id')->nullable()->constrained();
             $table->integer('note')->default(0);
             $table->foreignId('role_id')->constrained();
             $table->enum('status', ['owner', 'member'])->default('member');

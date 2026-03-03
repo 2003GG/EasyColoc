@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CategorieController extends Controller
 {
     public function index(){
-        $categories=Categorie::all()->where('colocation_id',auth()->user()->colocation->id);
+        $categories=Categorie::all()->where('colocation_id',auth()->user()->colocation_id);
         return view('categories',compact('categories'));
     }
     public function store(CategorieRequest $request){
