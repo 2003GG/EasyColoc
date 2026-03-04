@@ -503,7 +503,6 @@
     </head>
     <body>
 
-        {{-- ── NAV ── --}}
         <nav>
             <a href="/" class="logo">Coloc<span>.</span></a>
             <div class="nav-links">
@@ -589,7 +588,6 @@
             </div>
         </section>
 
-        {{-- ── FEATURES ── --}}
         <section class="features">
             <p class="section-label">Why Coloc?</p>
             <h2>Everything you need to find a home.</h2>
@@ -628,7 +626,6 @@
             </div>
         </section>
 
-        {{-- ── CTA STRIP ── --}}
         <section class="cta-strip">
             <h2>Ready to find your next home?</h2>
             <p>Join thousands of people already using Coloc across France.</p>
@@ -652,7 +649,6 @@
             </div>
         </section>
 
-        {{-- ── FOOTER ── --}}
         <footer>
             <p class="logo" style="font-size:1.1rem;">Coloc<span style="color:var(--green-fresh)">.</span></p>
             <p>© {{ date('Y') }} Coloc. Built with ❤️ for better living.</p>

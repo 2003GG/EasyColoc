@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class PayementController extends Controller
 {
     public function index(){
-        $payements = Payement::where('colocation_id', auth()->user()->colocation_id)->take(1)->get();
+        $payements = Payement::where('colocation_id', auth()->user()->colocation_id)->where('user_id',auth()->user()->id)->get();
         return view('payements',compact('payements'));
     }
    public function Paid($payementId)

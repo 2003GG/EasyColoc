@@ -62,7 +62,7 @@
 </style>
 </head>
 <body>
-@include('header')
+@include('layouts/header');
 
 @if(auth()->user()->status=='owner')
 <main class="main">

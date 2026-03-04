@@ -126,7 +126,7 @@
 </style>
 </head>
 <body>
-@include('header')
+@include('layouts/header');
 <main class="main">
   <div class="topbar">
     <div class="topbar-title">Paiements</div>

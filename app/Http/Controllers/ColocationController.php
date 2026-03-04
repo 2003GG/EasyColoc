@@ -47,10 +47,11 @@ class ColocationController extends Controller
         'status'=>'member',
       ]);
       if($user->payement()->sum('my_part') >= 0){
-        $user->decrement('note');
+        $user->increment('note');
       }
       else{
-        $user->increment('note');
+        $user->decrement('note');
+
       }
 
 

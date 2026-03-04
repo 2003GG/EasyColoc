@@ -646,9 +646,9 @@
 <body>
 
   @if (auth()->user()->condition=='banne')
-@include('banned')
+@include('layouts/banned')
 @else
-@include('header');
+@include('layouts/header');
 
 
 
